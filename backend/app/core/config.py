@@ -17,7 +17,7 @@ from typing_extensions import Self
 
 def parse_cors(v: Any) -> list[str] | str:
     if isinstance(v, str) and not v.startswith("["):
-        return [i.strip() for i in v.split(",")]
+        return [i.strip() for i in v.split(",") if i.strip()]
     elif isinstance(v, list | str):
         return v
     raise ValueError(v)
@@ -75,7 +75,7 @@ class Settings(BaseSettings):
     SMTP_USER: str | None = None
     SMTP_PASSWORD: str | None = None
     EMAILS_FROM_EMAIL: EmailStr | None = None
-    EMAILS_FROM_NAME: EmailStr | None = None
+    EMAILS_FROM_NAME: str | None = None
 
     @model_validator(mode="after")
     def _set_default_emails_from(self) -> Self:
